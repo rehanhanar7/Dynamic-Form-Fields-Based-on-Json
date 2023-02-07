@@ -22,11 +22,27 @@ interface FieldConfig {
   objectProp?: string;
 }
 
+interface User {
+  username: string;
+  email: string;
+  bio: string;
+  gender: string;
+  dob: string;
+  country: string;
+}
+
 @Component({
   selector: 'my-app',
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule],
   template: `
+  <div class="form-group">
+  <label for="usernameSelect">Select User:</label>
+  <select class="form-control" id="usernameSelect" [(ngModel)]="selectedUsername" (ngModelChange)="populateForm()">
+    <option *ngFor="let user of users" [value]="user.username">{{user.username}}</option>
+  </select>
+</div>
+
   <form [formGroup]="form" (ngSubmit)="submit()" class="p-3">
   <ng-container *ngFor="let field of fields">
     <div class="form-group" [ngSwitch]="field.type">
@@ -55,6 +71,59 @@ interface FieldConfig {
 export class App implements OnInit {
   name = 'Angular';
   form: FormGroup;
+  selectedUsername: string;
+
+  users: User[] = [
+    {
+      username: null,
+      email: null,
+      bio: null,
+      gender: 'Male',
+      dob: null,
+      country: null,
+    },
+    {
+      username: 'user1',
+      email: 'user1@email.com',
+      bio: 'This is my bio',
+      gender: 'Male',
+      dob: '2000-01-01',
+      country: 'New Zealand',
+    },
+    {
+      username: 'user2',
+      email: 'user2@email.com',
+      bio: 'This is my bio',
+      gender: 'Female',
+      dob: '2001-02-02',
+      country: 'Malaysia',
+    },
+    {
+      username: 'user3',
+      email: 'user3@email.com',
+      bio: 'This is my bio',
+      gender: 'Male',
+      dob: '2002-03-03',
+      country: 'Guam',
+    },
+    {
+      username: 'user4',
+      email: 'user4@email.com',
+      bio: 'This is my bio',
+      gender: 'Female',
+      dob: '2003-04-04',
+      country: 'Canada',
+    },
+    {
+      username: 'user5',
+      email: 'user5@email.com',
+      bio: 'This is my bio',
+      gender: 'Male',
+      dob: '2004-05-05',
+      country: 'Iceland',
+    },
+  ];
+
   fields: FieldConfig[] = [
     {
       name: 'username',
@@ -135,6 +204,14 @@ export class App implements OnInit {
     if (this.form.valid) {
       console.log(this.form.value);
     }
+  }
+
+  populateForm() {
+    const selectedField = this.users.find(
+      (user) => user.username == this.selectedUsername
+    );
+    this.form.patchValue(selectedField);
+    console.log(selectedField);
   }
 }
 
