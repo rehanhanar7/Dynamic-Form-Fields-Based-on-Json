@@ -1,3 +1,8 @@
+/**
+ * @author Rehan Hanar
+ * @email rehanhanar.com@gmail.com
+ */
+
 import 'zone.js/dist/zone';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
