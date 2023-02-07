@@ -75,12 +75,12 @@ export class App implements OnInit {
 
   users: User[] = [
     {
-      username: null,
-      email: null,
-      bio: null,
+      username: '',
+      email: '',
+      bio: '',
       gender: 'Male',
-      dob: null,
-      country: null,
+      dob: '',
+      country: '',
     },
     {
       username: 'user1',
